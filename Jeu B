@@ -1,0 +1,42 @@
+# B, qui est un jeu avec deux pièces biaisées. 
+# La première pièce donne pile avec une probabilité p1 = 0.09 
+# et la seconde pièce donne pile avec une probabilité p2 = 0.74. 
+#
+# Le joueur ne peut miser qu’un euro à la fois ! 
+#
+# En revanche, on regarde à chaque lancé son capital (la somme d’argent totale) 
+# dont il dispose pour déterminer quelle pièce lancer : 
+# 
+# si le capital est un multiple de 3, on lance la pièce numéro une, 
+# sinon on lance la seconde pièce. 
+# 
+# le joueur remporte sa mise plus un euro supplémentaire si la pièce choisie tombe sur pile, 
+# sinon il perd sa mise.
+
+import random
+capital = 1000
+nombredelancers = 500
+
+def lancer_de_pieceB(capital):
+    if capital % 3 == 0:
+        resultat = random.choices(['Face', 'Pile'],weights=[0.91,0.09],k=1)
+        print("Pièce 1 lancée avec un capital multiple de 3 :",capital)
+        print("Résultat de la pièce 1 :",resultat[0])
+
+    else:
+        resultat = random.choices(['Face', 'Pile'],weights=[0.26,0.74],k=1)
+        print("Pièce 2 lancée avec un capital NON-multiple de 3 :",capital)
+        print("Résultat de la pièce 2 :",resultat[0])
+    return resultat[0]
+print("Lancer de pièce avec un capital de",capital, "euros.")
+
+
+for i in range (nombredelancers):
+    resultat = lancer_de_pieceB(capital)
+    if resultat == 'Pile':
+        capital += 1
+    else:
+        capital -= 1
+print("Après ce lancé, mon capital est de",capital,"euros")
+
+print("Après",nombredelancers,"lancers, mon capital final est de",capital,"euros")  

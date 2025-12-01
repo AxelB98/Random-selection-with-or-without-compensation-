@@ -1,0 +1,55 @@
+# A chaque tour, on lance une pièce (cette fois-ci...) équilibrée ! 
+#Si l'on a pile, on joue au jeu A, 
+# sinon on joue au jeu B.
+# Le joueur a 1000 euros comme capital de départ.
+# Après avoir joué 1.000.000 de parties, quel est le statut du jeu, du point de vue du joueur ?
+
+import random
+
+capital = 1000
+nombredelancers = 1000000
+
+def lancer_de_piece():
+    toast = random.choice(['Face', 'Pile'])
+    print("Résultat du toast :", toast[0])
+    return toast[0]
+
+def lancer_de_pieceA():
+    resultatA = random.choices(['Face', 'Pile'], weights=[51, 49], k=1)
+    return resultatA[0]
+
+def lancer_de_pieceB(capital):
+    if capital % 3 == 0:
+        resultatB = random.choices(['Face', 'Pile'],weights=[0.91,0.09],k=1)
+        print("Pièce 1 lancée avec un capital multiple de 3 :",capital)
+        print("Résultat de la pièce 1 :",resultatB[0])
+
+    else:
+        resultatB = random.choices(['Face', 'Pile'],weights=[0.26,0.74],k=1)
+        print("Pièce 2 lancée avec un capital NON-multiple de 3 :",capital)
+        print("Résultat de la pièce 2 :",resultatB[0])
+    return resultatB[0]
+
+
+
+for i in range (nombredelancers):
+    toast = lancer_de_piece()
+    if toast == 'P':
+        #Jeu A
+        resultatA = lancer_de_pieceA()
+        if resultatA == 'Pile':
+            capital += 1
+        else:
+            capital -= 1
+        print("Lancer de pièce A :", resultatA)
+        print("Après ce lancé, mon capital est de",capital,"euros")
+    else:
+        #Jeu B
+        resultatB = lancer_de_pieceB(capital)
+        if resultatB == 'Pile':
+            capital += 1
+        else:
+            capital -= 1
+        print("Lancer de pièce B :", resultatB)
+        print("Après ce lancé, mon capital est de",capital,"euros")
+print("Après",nombredelancers,"lancers, mon capital final est de",capital,"euros")
